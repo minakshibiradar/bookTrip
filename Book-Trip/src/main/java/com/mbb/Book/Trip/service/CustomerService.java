@@ -22,28 +22,29 @@ public class CustomerService {
 
     @Autowired
     CustomerRepository repo;
+
     public CustomerResponse addCustomer(CustomerRequest customerRequest) {
 
-        Customer customer= CustomerTransformer.customerToRequest(customerRequest);
+        Customer customer = CustomerTransformer.customerToRequest(customerRequest);
 
-         Customer savedCust= repo.save(customer);
+        Customer savedCust = repo.save(customer);
 
-         CustomerResponse response=CustomerTransformer.customerToCustomerResponse(savedCust);
+        CustomerResponse response = CustomerTransformer.customerToCustomerResponse(savedCust);
 
-         return response;
+        return response;
 
 
     }
 
     public CustomerResponse getById(int customerId) {
-        Optional<Customer> optionalCust=repo.findById(customerId);
+        Optional<Customer> optionalCust = repo.findById(customerId);
 //        the method findById has return type is optional
-        if(optionalCust.isEmpty()){
+        if (optionalCust.isEmpty()) {
             throw new customerNotFound("Invalid Input id");
         }
-        Customer getCustomer= optionalCust.get();
+        Customer getCustomer = optionalCust.get();
 
-        CustomerResponse response=CustomerTransformer.customerToCustomerResponse(getCustomer);
+        CustomerResponse response = CustomerTransformer.customerToCustomerResponse(getCustomer);
 
         return response;
 
@@ -51,9 +52,9 @@ public class CustomerService {
     }
 
     public List<CustomerResponse> getByGenderandAge(Gender gender, int age) {
-        List<Customer> customerList=repo.getByGenderAndAge(gender,age);
-        List<CustomerResponse>responses=new ArrayList<>();
-        for(Customer cust:customerList){
+        List<Customer> customerList = repo.getByGenderAndAge(gender, age);
+        List<CustomerResponse> responses = new ArrayList<>();
+        for (Customer cust : customerList) {
             responses.add(CustomerTransformer.customerToCustomerResponse(cust));
         }
         return responses;
@@ -61,9 +62,9 @@ public class CustomerService {
 
     public List<CustomerResponse> getByGenderandAgeGreaterThan(Gender gender, int age) {
 
-        List<Customer> customerList=repo.getByGenderAndAgeGreaterThan(gender,age);
-        List<CustomerResponse>responses=new ArrayList<>();
-        for(Customer cust:customerList){
+        List<Customer> customerList = repo.getByGenderAndAgeGreaterThan(gender, age);
+        List<CustomerResponse> responses = new ArrayList<>();
+        for (Customer cust : customerList) {
             responses.add(CustomerTransformer.customerToCustomerResponse(cust));
         }
         return responses;
@@ -72,17 +73,15 @@ public class CustomerService {
     }
 
     public List<CustomerResponse> getByGenderandAgeGreaterThanUsingSQL(String gender, int age) {
-        List<Customer> customerList=repo.getByGenderAndAgeGreaterThanUsingSQL(gender,age);
-        List<CustomerResponse>responses=new ArrayList<>();
-        for(Customer cust:customerList){
+        List<Customer> customerList = repo.getByGenderAndAgeGreaterThanUsingSQL(gender, age);
+        List<CustomerResponse> responses = new ArrayList<>();
+        for (Customer cust : customerList) {
             responses.add(CustomerTransformer.customerToCustomerResponse(cust));
         }
         return responses;
 
 
     }
-
-    public List<Customer> getCustomerMoreThanTwoBooking(Date date) {
-        return repo.getCustomerMorethanTwoBooking(date);
-    }
 }
+
+

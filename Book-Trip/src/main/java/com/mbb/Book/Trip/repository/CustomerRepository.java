@@ -26,8 +26,7 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
     List<Customer> getByGenderAndAgeGreaterThanUsingSQL(String gender, int age);
 
 
-    @Query("Select c from Customer c join booking , COUNT(booking) > 2 where booking.bookedAt=:date Group by booking.bookedAt")
-    List<Customer> getCustomerMorethanTwoBooking(@Param("date") Date date);
+
 //    here we take gender as a string because gender is enum in Customer class but in customer table it
 //    is a varchar , SQL do not have enum datatype . When you using SQl keep this is in mind;
 }

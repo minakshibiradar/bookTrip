@@ -54,10 +54,6 @@ public class CustomerController {
 
     }
 //    find out customer who have more than two bookings in one single day
-      @GetMapping("/customerMoreThanTwoBookings")
-      public List<Customer> getCustomerMoreThanTwoBooking(@RequestParam("date") Date date){
-        return serv.getCustomerMoreThanTwoBooking(date);
 
-      }
 
 }
