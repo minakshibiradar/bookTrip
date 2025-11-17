@@ -2,6 +2,7 @@ package com.mbb.Book.Trip.service;
 
 import com.mbb.Book.Trip.Enum.Gender;
 import com.mbb.Book.Trip.exception.customerNotFound;
+import com.mbb.Book.Trip.model.Booking;
 import com.mbb.Book.Trip.model.Customer;
 import com.mbb.Book.Trip.repository.CustomerRepository;
 import com.mbb.Book.Trip.request.CustomerRequest;
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,6 +85,39 @@ public class CustomerService {
         return responses;
 
 
+    }
+
+    public List<CustomerResponse> getCustomerMoreThanTwoBookings(Date date) {
+        List<CustomerResponse>listOfCustomer=new ArrayList<>();
+        List<Customer> custList=repo.findAll();
+        for(Customer cust:custList){
+            List<Booking>books=cust.getBookings();
+            int count=0;
+
+            for(Booking book:books){
+                Date dateTime=book.getBookedAt();
+                LocalDate extractedDate = dateTime.toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+
+                LocalDate inputDate = date.toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+
+
+
+                if(extractedDate.isEqual(inputDate)){
+                    count++;
+                }
+                if(count >= 2) {
+                    listOfCustomer.add(CustomerTransformer.customerToCustomerResponse(cust));
+                    break;
+                }
+            }
+
+        }
+
+        return listOfCustomer;
     }
 }
 

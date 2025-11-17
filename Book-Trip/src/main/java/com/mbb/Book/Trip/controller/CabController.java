@@ -17,4 +17,5 @@ public class CabController {
     public CabResponse addCadWithDriver(@RequestBody CabRequest cabRequest , @PathVariable("driverId") int driverId){
         return cabService.addCabWithDriver(cabRequest,driverId);
     }
+
 }

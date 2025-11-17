@@ -7,6 +7,7 @@ import com.mbb.Book.Trip.request.CustomerRequest;
 import com.mbb.Book.Trip.response.CustomerResponse;
 import com.mbb.Book.Trip.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,9 @@ public class CustomerController {
 
     }
 //    find out customer who have more than two bookings in one single day
-
+       @GetMapping("getCustomerMorethanTwoBookings")
+    public List<CustomerResponse> getCustomerMoreThanTwoBookings(@RequestParam @DateTimeFormat(pattern ="yyyy-MM-dd") Date date){
+        return serv.getCustomerMoreThanTwoBookings(date);
+       }
 
 }
